@@ -12,12 +12,6 @@ Minimalist plotter class for any purpose. Created for internal needs. Feel free 
 
 ## 1.1. Usage
 
-Installation:
-
-`
-pip3 install Plotter
-`
-
 Soon.
 
 ## 1.2. Contribution
