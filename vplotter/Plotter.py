@@ -1,6 +1,3 @@
-# Copyright: 2020.
-# Authors: Alexander Kazakov, Varvara Prokacheva
-
 import numpy as np
 import veusz.embed as veusz
 import os, sys
@@ -10,7 +7,7 @@ import functools
 import getpass
 
 try:
-    from Storer import Storer
+    from storer import Storer
 except:
     print("Storer is not available. Aborting...")
     sys.exit(1)
@@ -92,7 +89,7 @@ class Plotter:
     marker='circle',  ymin='Auto', xmin='Auto',
     markersize='2pt', ymax='Auto', xmax='Auto',
     transparency=None,):
-        __version__ = "1.2.2"
+        __version__ = "1.2.3"
         self.internal_name = "[Plotter]"
         self.storer = Storer()
         self.pages_info = pages_info
