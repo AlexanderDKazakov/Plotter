@@ -74,7 +74,7 @@ class Plotter:
     marker='circle',  ymin='Auto', xmin='Auto',
     markersize='2pt', ymax='Auto', xmax='Auto',
     transparency=None,):
-        __version__ = "1.2.4"
+        __version__ = "1.2.5"
         self.internal_name = "[Plotter]"
         self.storer = Storer()
         self.pages_info = pages_info

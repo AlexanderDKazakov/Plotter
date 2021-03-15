@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name         = 'vplotter',
-    version      = '1.2.4',
+    version      = '1.2.5',
     author       = 'Alexander D. Kazakov, Varvara M. Prokacheva',
     author_email = 'alexander.d.kazakov@gmail.com',
     description  = 'Plotter based on Veusz [https://github.com/veusz/veusz].',
