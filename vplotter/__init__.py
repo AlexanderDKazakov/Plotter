@@ -9,7 +9,7 @@ __all__ = (
 )
 
 import pkg_resources
-__version__           = pkg_resources.get_distribution("Plotter").version
+__version__           = pkg_resources.get_distribution("vplotter").version
 
 __short_description__ = "Plotter class for any purpose, based on Veusz."
 __license__           = "MIT"
