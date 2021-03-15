@@ -1,10 +1,13 @@
+from decor import deprecated
 import numpy as np
-import veusz.embed as veusz
 import os, sys
 import re
-import warnings
-import functools
-import getpass
+
+try:
+    import veusz.embed as veusz
+except:
+    print("Veusz is not available. Aborting...")
+    sys.exit(1)
 
 try:
     from storer import Storer
@@ -13,27 +16,12 @@ except:
     sys.exit(1)
 
 
-def deprecated(func):
-    """This is a decorator which can be used to mark functions
-    as deprecated. It will result in a warning being emitted
-    when the function is used."""
-    @functools.wraps(func)
-    def new_func(*args, **kwargs):
-        warnings.simplefilter('always', DeprecationWarning)  # turn off filter
-        warnings.warn("Call to deprecated function {}.".format(func.__name__),
-                      category=DeprecationWarning,
-                      stacklevel=2)
-        warnings.simplefilter('default', DeprecationWarning)  # reset filter
-        return func(*args, **kwargs)
-    return new_func
-
-
 COLOR_DICT = {
-    1: 'black',   2: 'red',      3: 'green',    4: 'blue',
-    5: 'magenta', 6: '#01A9DB',  7: '#006F74',  8: '#8904B1',
-    9: '#B4045F', 10: '#585858', 11: '#DF3A01', 12: '#DBA901',
-    13: '#74DF00',14: '#CEF6F5', 15: '#0041FB', 16: '#00FB91',
-    17: '#887D64',18: '#00C9FF', 19: '#7625B6', 20: '#B08EA0',
+    1: 'black',     2: 'red',      3: 'green',    4: 'blue',
+    5: 'magenta',   6: '#01A9DB',  7: '#006F74',  8: '#8904B1',
+    9: '#B4045F',   10: '#585858', 11: '#DF3A01', 12: '#DBA901',
+    13: '#74DF00',  14: '#CEF6F5', 15: '#0041FB', 16: '#00FB91',
+    17: '#887D64',  18: '#00C9FF', 19: '#7625B6', 20: '#B08EA0',
 }
 
 LINE_TYPE_DICT = {
@@ -62,19 +50,16 @@ LABELS_DICT = dict(
 def get_line_color(num):
     t = "black"
     if num <= len(COLOR_DICT) - 1 : t =  COLOR_DICT[num]
-    else: print(f"Are you plotting more than {str(len(COLOR_DICT))} curves??")
     return t
 
 def get_line_type(num):
     t = "solid"
     if num <= len(LINE_TYPE_DICT) - 1 : t =  LINE_TYPE_DICT[num]
-    else: print(f"Are you plotting more than {str(len(LINE_TYPE_DICT))} curves??")
     return t
 
 def get_marker_typ(num):
     t = "circle"
     if num <= len(MARKER_TYPE_DICT) - 1: t =  MARKER_TYPE_DICT[num]
-    else: print(f"Are you plotting more than {str(len(MARKER_TYPE_DICT))} curves??")
     return t
 
 def getLabel(name: str) -> str:
@@ -89,7 +74,7 @@ class Plotter:
     marker='circle',  ymin='Auto', xmin='Auto',
     markersize='2pt', ymax='Auto', xmax='Auto',
     transparency=None,):
-        __version__ = "1.2.3"
+        __version__ = "1.2.4"
         self.internal_name = "[Plotter]"
         self.storer = Storer()
         self.pages_info = pages_info
