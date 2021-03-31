@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .vplotter import Plotter
+from .vplotter      import Plotter
 
 from setuptools import setup, find_packages
 
