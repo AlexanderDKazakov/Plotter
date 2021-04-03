@@ -24,7 +24,6 @@
 
 from dataclasses             import dataclass, field
 from typing                  import Any, Union
-from decor                   import deprecated
 from .engines.veusz_engine   import VeuszEngine
 from .engines.gnuplot_engine import GnuplotEngine
 import os, sys, re
@@ -55,7 +54,7 @@ class Plotter:
     ymax          : str    = "Auto"
     xmin          : str    = "Auto"
     xmax          : str    = "Auto"
-    
+
     # Veusz dependent
     pages_info    : dict   = field(default_factory=dict)
     keyBorderHide : bool   = True
@@ -64,18 +63,18 @@ class Plotter:
     def __post_init__(self):
         if self.engine.lower() == "veusz" and VEUSZ:
             self.plotter_engine = VeuszEngine(
-                title         = self.title, 
-                pages_info    = self.pages_info, 
+                title         = self.title,
+                pages_info    = self.pages_info,
                 showkey       = self.showkey,
-                keyBorderHide = self.keyBorderHide, 
+                keyBorderHide = self.keyBorderHide,
                 plotLine      = self.plotLine,
-                xname         = self.xname, 
-                yname         = self.yname, 
-                ylog          = self.ylog, 
+                xname         = self.xname,
+                yname         = self.yname,
+                ylog          = self.ylog,
                 xlog          = self.xlog,
-                ymin          = self.ymin, 
-                ymax          = self.ymax, 
-                xmin          = self.xmin, 
+                ymin          = self.ymin,
+                ymax          = self.ymax,
+                xmin          = self.xmin,
                 xmax          = self.xmax,
                 transparency  = self.transparency
             )
@@ -84,13 +83,13 @@ class Plotter:
                 title         = self.title,
                 showkey       = self.showkey,
                 plotLine      = self.plotLine,
-                xname         = self.xname, 
-                yname         = self.yname, 
-                ylog          = self.ylog, 
+                xname         = self.xname,
+                yname         = self.yname,
+                ylog          = self.ylog,
                 xlog          = self.xlog,
-                ymin          = self.ymin, 
-                ymax          = self.ymax, 
-                xmin          = self.xmin, 
+                ymin          = self.ymin,
+                ymax          = self.ymax,
+                xmin          = self.xmin,
                 xmax          = self.xmax,
 
             )

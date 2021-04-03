@@ -1,16 +1,31 @@
-# 1. Plotter
+# Plotter
 
-- [1. Plotter](#1-plotter)
-  - [1.1. Usage](#11-usage)
-  - [1.2. Contribution](#12-contribution)
-  - [License](#-license)
+- [General](#plotter)
+	- [Engines](#engines) 	
+	- [Installation](#install)
+	- [Usage](#usage)
+	- [Contribution](#contribution)
+	- [License](#license)
 
+Plotter is a minimalistic class for plotting. Feel free to use it and contribute (see [contribution section](#12-contribution)).
 
-Minimalist plotter class for any purpose. Created for internal needs. Feel free to use it and contribute (see [contribution section](#12-contribution)).
+## Engines
 
+Next engines supported:
 
+* [Veusz](https://veusz.github.io/)
+* [Gnuplot](http://www.gnuplot.info/) (experimental)
 
-## 1.1. Usage
+## Installation
+
+Note: before usage make sure that the engine is installed.
+
+```
+pip install vplotter
+
+```
+
+## Usage
 
 ```python
 >>> from vplotter import Plotter
@@ -26,7 +41,7 @@ If you see something similar to this:
 
 So you have it. Nice! 
 
-Similarly you can use another engine: GnuplotEngine. 
+Similarly you can use another engine: Gnuplot engine. 
 
 ```python
 >>> from vplotter import Plotter
@@ -63,7 +78,7 @@ Similarly you can use another engine: GnuplotEngine.
 Currently GnuplotEngine is in experimental mode.
 It is plotting the graph only to your terminal. Further releases would expand the functionality.
 
-## 1.2. Contribution
+## Contribution
 
 Feel free to contribute to the project, but please initially create an issue with detailed problem and way how to resolve it. 
 

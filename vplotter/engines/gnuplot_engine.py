@@ -28,14 +28,15 @@
     # extend to several line at once
     # ...
 
-from decor         import deprecated
 from .bot_engine   import BotEngine
 from dataclasses   import dataclass, field
 
-try:    
+try:
     from pygnuplot import gnuplot
     from pygnuplot.gnuplot import Gnuplot
-except: print("GNUPLOT is not available")
+except Exception as e:
+    Gnuplot = object
+    print(f"GNUPLOT is not available: {e}")
 
 import pandas as pd
 import numpy  as np
@@ -57,20 +58,20 @@ class GnuplotEngine(BotEngine):
             )
         if self.xlog: self.g.set("logscale x")
         if self.ylog: self.g.set("logscale y")
-        
+
         # X
-        if self.xmin.lower() != "auto" or self.xmax.lower() != "auto": 
-            # drop value 
+        if self.xmin.lower() != "auto" or self.xmax.lower() != "auto":
+            # drop value
             xmin = "" if self.xmin == "Auto" else str(self.xmin)
             xmax = "" if self.xmax == "Auto" else str(self.xmax)
             self.g.set(f"xrange [{str(xmin)}:{str(xmax)}")
         # y
-        if self.ymin.lower() != "auto" or self.ymax.lower() != "auto": 
-            # drop value 
+        if self.ymin.lower() != "auto" or self.ymax.lower() != "auto":
+            # drop value
             ymin = "" if self.ymin == "Auto" else str(self.ymin)
             ymax = "" if self.ymax == "Auto" else str(self.ymax)
             self.g.set(f"yrange [{str(ymin)}:{str(ymax)}")
-    
+
     def plot(self, x, y, key_name_f='', key_name="", **kwargs):
         _x, _y, _xerr, _yerr = None, None, None, None,
         if len(np.shape(y)) == 2: _y = y[0]; _yerr = y[1]
@@ -96,9 +97,9 @@ class GnuplotEngine(BotEngine):
             if self.plotLine: using_str += " with line"
         if _x is not None and _y is not None and _yerr is not None:
             using_str = "1:3:4 with yerr"
-        
+
         if key_name_f: key = self.name_converter(key_name_f)
         else:          key = key_name
 
-        self.g.plot_data(df, f"using {using_str} t '{key}' ") 
+        self.g.plot_data(df, f"using {using_str} t '{key}' ")
 

@@ -22,7 +22,6 @@
 ## SOFTWARE.
 ##*
 
-from decor          import deprecated
 from .bot_engine    import BotEngine
 from .plotter_utils import get_line_color, get_line_type, get_marker_type
 from dataclasses    import dataclass, field
@@ -31,10 +30,12 @@ from typing         import Any, List, Union
 import numpy as np
 import os, sys, re
 
-try:    
+try:
     import veusz.embed as veusz
-    from veusz.embed    import Embedded
-except: print("Veusz is not available. ")
+    from veusz.embed   import Embedded
+except Exception as e:
+    Embedded = object
+    print(f"Veusz is not available: {e}")
 
 try:    from storer import Storer
 except: print("Storer is not available. Aborting..."); sys.exit(1)
@@ -65,7 +66,7 @@ class VeuszEngine(BotEngine):
     xmax          : str      = "Auto"
     #
     transparency   : float    = 50.0
-    
+
     def __post_init__(self):
        self.storer = Storer(exit_backup=False)
 
@@ -135,21 +136,21 @@ class VeuszEngine(BotEngine):
         return _num_lines, __num_lines
 
     def plot(
-        self, 
-        x                  : List, 
-        y                  : List, 
-        key_name_f         : str             = "", 
+        self,
+        x                  : List,
+        y                  : List,
+        key_name_f         : str             = "",
         key_name           : str             = "",
         markersize         : str             = "2.5pt",
-        plotLine           : bool            = True, 
-        color_num          : Union[str, int] = "auto", 
+        plotLine           : bool            = True,
+        color_num          : Union[str, int] = "auto",
         marker_type        : Union[str, int] = "auto",
         line_type          : Union[str, int] = "auto",
-        save_previous_state: bool            = False, 
-        animation          : bool            = False, 
+        save_previous_state: bool            = False,
+        animation          : bool            = False,
         errorStyle         : str             = None,
-        internal_text      : str             = "", 
-        page               : str             = "page1", 
+        internal_text      : str             = "",
+        page               : str             = "page1",
         ):
 
         _num_lines, __num_lines = self.get_page(name=page)
@@ -181,7 +182,7 @@ class VeuszEngine(BotEngine):
         else:
             x_data = x
             self.g.SetData(x_dataname, x_data)
-        
+
         if len(np.shape(y)) == 2:
             y_data, y_data_err = y[0], y[1]
             self.g.SetData(y_dataname, y_data, symerr=y_data_err)
@@ -247,22 +248,6 @@ class VeuszEngine(BotEngine):
         __num_lines += 1
         self.storer.put(_num_lines, name=page+ "/_num_lines")
         self.storer.put(__num_lines, name=page+ "/__num_lines")
-
-    @deprecated
-    def make_label(self,  chi=0, N=0, sigma=0, a=0):
-        label = self.graph.Add('label')
-        label.label.val += '\\\\\\chi = ' + str(chi) + '\\\\ \sigma = ' + str(sigma) + '\\\\N = ' + str(N) + ', a = ' + str(a)
-        # label.label.val += '\\\\\\chi = ' + str(chi) + ', pH = ' + str(pH) + '\\\\c_{s} = ' + '{:.2e}'.format(cs) + ' mol/l'
-        label.xPos.val = 0.65
-        label.yPos.val = 0.75
-
-    @deprecated
-    def make_smallabel(self, t = 0, color_num = 1):
-        label2 = self.graph.Add('label')
-        label2.label.val = 't = ' + str(t)
-        label2.xPos.val = 0.6
-        label2.yPos.val = 0.4
-        label2.Text.color.val = get_line_color(color_num)
 
     def export(self, filename=None, extension=None, color=True, page=0, dpi=100, antialias=True, quality=85, backcolor='#ffffff00', pdfdpi=150, svgtextastext=False):
         if not filename or not extension:

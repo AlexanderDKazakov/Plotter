@@ -1,3 +1,5 @@
 numpy
 storer
 veusz
+pygnuplot
+pandas

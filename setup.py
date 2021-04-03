@@ -5,10 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name         = 'vplotter',
-    version      = '1.3.0',
+    version      = '1.3.1',
     author       = 'Alexander D. Kazakov, Varvara M. Prokacheva',
     author_email = 'alexander.d.kazakov@gmail.com',
-    description  = 'Plotter based on Veusz [https://github.com/veusz/veusz].',
+    description  = 'Plotter is a minimalistic handler to use plotting engines. See details for engine availability.',
     license      = 'MIT',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -24,10 +24,12 @@ setuptools.setup(
       'Programming Language :: Python :: 3.8',
       'Programming Language :: Python :: 3.9',
       ],
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     install_requires=[
-          'storer',
-          'numpy',
+        'storer',
+        'numpy',
+        'pygnuplot',
+        'pandas'
       ],
 )
 
