@@ -68,7 +68,7 @@ class VeuszEngine(BotEngine):
     transparency   : float    = 50.0
 
     def __post_init__(self):
-       self.storer = Storer(exit_backup=False)
+       self.storer = Storer(exit_dump=False)
 
        self.g = veusz.Embedded(self.title)
        self.g.EnableToolbar()
