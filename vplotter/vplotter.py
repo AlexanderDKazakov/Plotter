@@ -101,6 +101,11 @@ class Plotter:
     def export(self, **kwargs):
         if self.plotter_engine == VeuszEngine:
             self.plotter_engine.export(**kwargs)
+    
+    def save(self, **kwargs):
+        if self.plotter_engine == VeuszEngine:
+            self.plotter_engine.save(**kwargs)
+
 
 #
 if __name__ == "__main__":
