@@ -99,12 +99,14 @@ class Plotter:
         self.plotter_engine.plot(x=x, y=y, **kwargs)
 
     def export(self, **kwargs):
-        if self.plotter_engine == VeuszEngine:
+        if type(self.plotter_engine) == VeuszEngine:
             self.plotter_engine.export(**kwargs)
-    
-    def save(self, *args):
-        if self.plotter_engine == VeuszEngine:
-            self.plotter_engine.save(*args)
+
+    def save(self, filename=None):
+        if type(self.plotter_engine) == VeuszEngine:
+            self.plotter_engine.save(filename=filename)
+        else:
+            print("Saving is not implemented for this engine.")
 
 
 #
