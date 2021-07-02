@@ -38,7 +38,7 @@ if not VEUSZ and not GNUPLOT: print("No plotters available. Aborting."); sys.exi
 
 @dataclass
 class Plotter:
-    __version__    : str                               = "1.3.2"
+    __version__    : str                               = "1.3.3"
     internal_name  : str                               = "[Plotter]"
     engine         : str                               = "veusz"
     plotter_engine : Union[VeuszEngine, GnuplotEngine] = None
@@ -46,6 +46,7 @@ class Plotter:
     title         : str    = field(default="Notitle")
     showkey       : bool   = True
     plotLine      : bool   = True
+    keyFontSize   : int    = 14
     xname         : str    = "x"
     yname         : str    = "y"
     xlog          : bool   = False
@@ -66,6 +67,7 @@ class Plotter:
                 title         = self.title,
                 pages_info    = self.pages_info,
                 showkey       = self.showkey,
+                keyFontSize   = self.keyFontSize,
                 keyBorderHide = self.keyBorderHide,
                 plotLine      = self.plotLine,
                 xname         = self.xname,

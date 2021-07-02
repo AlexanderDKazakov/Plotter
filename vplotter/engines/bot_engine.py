@@ -82,3 +82,4 @@ class BotEngine:
 
     def plot(self, x, y, key_name_f='', key_name="", **kwargs):
         ...
+
