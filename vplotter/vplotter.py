@@ -38,8 +38,9 @@ if not VEUSZ and not GNUPLOT: print("No plotters available. Aborting."); sys.exi
 
 @dataclass
 class Plotter:
-    __version__    : str                               = "1.3.2"
+    __version__    : str                               = "1.3.3"
     internal_name  : str                               = "[Plotter]"
+    hidden         : bool                              = False
     engine         : str                               = "veusz"
     plotter_engine : Union[VeuszEngine, GnuplotEngine] = None
 
@@ -63,6 +64,7 @@ class Plotter:
     def __post_init__(self):
         if self.engine.lower() == "veusz" and VEUSZ:
             self.plotter_engine = VeuszEngine(
+                hidden        = self.hidden,
                 title         = self.title,
                 pages_info    = self.pages_info,
                 showkey       = self.showkey,
@@ -80,6 +82,7 @@ class Plotter:
             )
         if self.engine.lower() == "gnuplot" and GNUPLOT:
             self.plotter_engine = GnuplotEngine(
+                hidden        = self.hidden,
                 title         = self.title,
                 showkey       = self.showkey,
                 plotLine      = self.plotLine,
@@ -91,8 +94,8 @@ class Plotter:
                 ymax          = self.ymax,
                 xmin          = self.xmin,
                 xmax          = self.xmax,
-
             )
+
         print(f"===> [Plotter: (engine:{self.engine})] is initialized [v.{self.__version__}]")
 
     def plot(self, x, y, **kwargs):

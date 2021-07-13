@@ -70,7 +70,7 @@ class VeuszEngine(BotEngine):
     def __post_init__(self):
        self.storer = Storer(exit_dump=False)
 
-       self.g = veusz.Embedded(self.title)
+       self.g = veusz.Embedded(name=self.title, hidden=self.hidden)
        self.g.EnableToolbar()
        self.init_pages()
 
@@ -249,11 +249,12 @@ class VeuszEngine(BotEngine):
         self.storer.put(_num_lines, name=page+ "/_num_lines")
         self.storer.put(__num_lines, name=page+ "/__num_lines")
 
-    def export(self, filename=None, extension=None, color=True, page=0, dpi=100, antialias=True, quality=85, backcolor='#ffffff00', pdfdpi=150, svgtextastext=False):
+    def export(self, filename:str = "output.pdf", extension:str = "pdf", color:bool = True, page:int = 0, dpi:int = 100, antialias:bool = True, quality:int = 85, backcolor:str = '#ffffff00', pdfdpi:int = 150, svgtextastext:bool = False):
         if not filename or not extension:
             print(f"{self.internal_name} You have to specify filename and extension!")
-            print(f"{self.internal_name} For example: my_amazing_figure")
-            print(f"{self.internal_name} Available extensions: [pdf]/[eps]/[ps]/[svg]/[jpg]/[jpeg]/[bmp]/[png]]")
+            print(f"{self.internal_name} For example: filename='my_amazing_figure', extension='pdf'")
+            print(f"{self.internal_name}              color=True, extension='pdf', quality='85', pdfdpi='150'")
+            print(f"{self.internal_name} Available extensions: [pdf]/[eps]/[ps]/[svg]/[jpg]/[jpeg]/[bmp]/[png]")
         else: self.g.Export(filename, color=color, page=page, dpi=dpi, antialias=antialias, quality=quality, backcolor=backcolor, pdfdpi=pdfdpi, svgtextastext=svgtextastext)
 
     def save(self, filename=None):

@@ -32,6 +32,7 @@ except: print("Storer is not available. Aborting..."); sys.exit(1)
 
 @dataclass
 class BotEngine:
+    hidden        : bool   = False
     internal_name : str    = "[BotEngine]"
     storer        : Storer = None
 

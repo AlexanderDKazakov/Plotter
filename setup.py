@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name         = 'vplotter',
-    version      = '1.3.2',
+    version      = '1.3.3',
     author       = 'Alexander D. Kazakov, Varvara M. Prokacheva',
     author_email = 'alexander.d.kazakov@gmail.com',
     description  = 'Plotter is a minimalistic handler to use plotting engines. See details for engine availability.',
