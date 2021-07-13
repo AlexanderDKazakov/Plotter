@@ -54,6 +54,7 @@ class VeuszEngine(BotEngine):
     #
     showkey       : bool     = True
     keyBorderHide : bool     = True
+    keyFontSize   : int      = 14
     plotLine      : bool     = True
     #
     xname         : str      = "x"
@@ -132,6 +133,7 @@ class VeuszEngine(BotEngine):
             if self.showkey:
                 self.graph.Add('key')
                 self.graph.key1.Border.hide.val = self.keyBorderHide
+                self.graph.key1.Text.size.val   = f"{str(self.keyFontSize)}pt"
 
         return _num_lines, __num_lines
 
