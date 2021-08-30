@@ -188,11 +188,11 @@ class VeuszEngine(BotEngine):
             self.g.SetData(x_dataname, x_data)
 
         if len(np.shape(y)) == 2:
-            y_arr = np.array(x)
+            y_arr = np.array(y)
             y_data, y_data_err = y_arr[:,0], y_arr[:,1]
             self.g.SetData(y_dataname, y_data, symerr=y_data_err)
         else:
-            y_arr = np.array(x)
+            y_arr = np.array(y)
             y_data = y_arr
             self.g.SetData(y_dataname, y_data)
 
