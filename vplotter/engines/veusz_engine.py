@@ -179,17 +179,21 @@ class VeuszEngine(BotEngine):
         y_dataname += internal_text
 
         if len(np.shape(x)) == 2:
-            x_data, x_data_err = x[0], x[1]
+            x_arr = np.array(x)
+            x_data, x_data_err = x_arr[:,0], x[:,1]
             self.g.SetData(x_dataname, x_data, symerr=x_data_err)
         else:
-            x_data = x
+            x_arr = np.array(x)
+            x_data = x_arr
             self.g.SetData(x_dataname, x_data)
 
         if len(np.shape(y)) == 2:
-            y_data, y_data_err = y[0], y[1]
+            y_arr = np.array(x)
+            y_data, y_data_err = y_arr[:,0], y_arr[:,1]
             self.g.SetData(y_dataname, y_data, symerr=y_data_err)
         else:
-            y_data = y
+            y_arr = np.array(x)
+            y_data = y_arr
             self.g.SetData(y_dataname, y_data)
 
         # self.graph = self.g.Root[name + '/graph1']

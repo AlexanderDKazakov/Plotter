@@ -38,7 +38,7 @@ if not VEUSZ and not GNUPLOT: print("No plotters available. Aborting."); sys.exi
 
 @dataclass
 class Plotter:
-    __version__    : str                               = "1.3.3"
+    __version__    : str                               = "1.3.4"
     internal_name  : str                               = "[Plotter]"
     hidden         : bool                              = False
     engine         : str                               = "veusz"
