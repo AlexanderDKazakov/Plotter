@@ -53,7 +53,7 @@ class BotEngine:
     xmin          : str    = "Auto"
     xmax          : str    = "Auto"
     #
-    transparency  : float  = 50.0
+    transparency  : int  = 50
 
     def __post_init__(self):
         ...

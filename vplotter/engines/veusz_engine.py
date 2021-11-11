@@ -66,7 +66,7 @@ class VeuszEngine(BotEngine):
     xmin          : str      = "Auto"
     xmax          : str      = "Auto"
     #
-    transparency   : float    = 50.0
+    transparency   : int    = 50
 
     def __post_init__(self):
        self.storer = Storer(exit_dump=False)
@@ -180,7 +180,7 @@ class VeuszEngine(BotEngine):
 
         if len(np.shape(x)) == 2:
             x_arr = np.array(x)
-            x_data, x_data_err = x_arr[:,0], x[:,1]
+            x_data, x_data_err = x_arr[:,0], x_arr[:,1]
             self.g.SetData(x_dataname, x_data, symerr=x_data_err)
         else:
             x_arr = np.array(x)
@@ -220,9 +220,9 @@ class VeuszEngine(BotEngine):
         if errorStyle:
             xy.errorStyle.val             = errorStyle
             xy.FillBelow.color.val        = get_line_color(color_num)
-            xy.FillBelow.transparency.val = self.transparency
+            xy.FillBelow.transparency.val = int(self.transparency)
             xy.FillAbove.color.val        = get_line_color(color_num)
-            xy.FillAbove.transparency.val = self.transparency
+            xy.FillAbove.transparency.val = int(self.transparency)
 
             #ErrorBarLine/style
             xy.ErrorBarLine.color.val = get_line_type(line_type)
