@@ -152,6 +152,7 @@ class VeuszEngine(BotEngine):
         animation          : bool            = False,
         errorStyle         : str             = None,
         internal_text      : str             = "",
+        fillMarker         : bool            = False,
         page               : str             = "page1",
         ):
 
@@ -209,6 +210,8 @@ class VeuszEngine(BotEngine):
 
         if color_num % 2: xy.MarkerFill.color.val = get_line_color(color_num)
         else: xy.MarkerFill.color.val = 'white'
+
+        if fillMarker: xy.MarkerFill.color.val = get_line_color(color_num)
 
         xy.MarkerLine.color.val = get_line_color(color_num)
         xy.markerSize.val     = markersize
