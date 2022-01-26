@@ -46,7 +46,7 @@ class Plotter:
 
     title         : str    = field(default="Notitle")
     showkey       : bool   = True
-    plotLine      : bool   = True
+    plot_line      : bool   = True
     keyFontSize   : int    = 14
     xname         : str    = "x"
     yname         : str    = "y"
@@ -71,7 +71,7 @@ class Plotter:
                 showkey       = self.showkey,
                 keyFontSize   = self.keyFontSize,
                 keyBorderHide = self.keyBorderHide,
-                plotLine      = self.plotLine,
+                plot_line     = self.plot_line,
                 xname         = self.xname,
                 yname         = self.yname,
                 ylog          = self.ylog,
@@ -87,7 +87,7 @@ class Plotter:
                 hidden        = self.hidden,
                 title         = self.title,
                 showkey       = self.showkey,
-                plotLine      = self.plotLine,
+                plot_line     = self.plot_line,
                 xname         = self.xname,
                 yname         = self.yname,
                 ylog          = self.ylog,

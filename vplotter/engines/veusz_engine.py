@@ -55,7 +55,7 @@ class VeuszEngine(BotEngine):
     showkey       : bool     = True
     keyBorderHide : bool     = True
     keyFontSize   : int      = 14
-    plotLine      : bool     = True
+    plot_line     : bool     = True
     #
     xname         : str      = "x"
     yname         : str      = "y"
@@ -211,17 +211,17 @@ class VeuszEngine(BotEngine):
         if color_num % 2: xy.MarkerFill.color.val = get_line_color(color_num)
         else: xy.MarkerFill.color.val = 'white'
 
-        if fillMarker: xy.MarkerFill.color.val = get_line_color(color_num)
+        if fill_marker: xy.MarkerFill.color.val = get_line_color(color_num)
 
         xy.MarkerLine.color.val = get_line_color(color_num)
-        xy.markerSize.val     = markersize
+        xy.markerSize.val     = marker_size
         xy.PlotLine.width.val = '1pt'
         xy.PlotLine.style.val = get_line_type(line_type)
         xy.PlotLine.color.val = get_line_color(color_num)
-        xy.PlotLine.hide.val  = not plotLine
+        xy.PlotLine.hide.val  = not plot_line
 
-        if errorStyle:
-            xy.errorStyle.val             = errorStyle
+        if error_style:
+            xy.errorStyle.val             = error_style
             xy.FillBelow.color.val        = get_line_color(color_num)
             xy.FillBelow.transparency.val = int(self.transparency)
             xy.FillAbove.color.val        = get_line_color(color_num)
