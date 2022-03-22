@@ -164,7 +164,7 @@ class VeuszEngine(BotEngine):
             save_previous_state = True
             xy = self._xy
 
-        if save_previous_state: _num_lines -= 1
+        #if save_previous_state: _num_lines -= 1
 
         if color_num == "auto": color_num = _num_lines
         if line_type == "auto": line_type = _num_lines
@@ -253,7 +253,7 @@ class VeuszEngine(BotEngine):
         y_axis.min.val = self.storer.get(page+"/ymin") # self.ymin
         y_axis.max.val = self.storer.get(page+"/ymax") # self.ymax
 
-        _num_lines  += 1
+        if not save_previous_state: _num_lines  += 1
         __num_lines += 1
         self.storer.put(_num_lines, name=page+ "/_num_lines")
         self.storer.put(__num_lines, name=page+ "/__num_lines")
