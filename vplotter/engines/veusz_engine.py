@@ -179,23 +179,75 @@ class VeuszEngine(BotEngine):
         x_dataname += internal_text
         y_dataname += internal_text
 
-        if len(np.shape(x)) == 2:
-            x_arr = np.array(x)
-            x_data, x_data_err = x_arr[:,0], x_arr[:,1]
-            self.g.SetData(x_dataname, x_data, symerr=x_data_err)
-        else:
+
+        # SetData(name, val, symerr=None, negerr=None, poserr=None)
+
+        # X
+        x_shape = np.shape(x)
+        if len(x_shape) <= 1:
+            # 1D
             x_arr = np.array(x)
             x_data = x_arr
             self.g.SetData(x_dataname, x_data)
-
-        if len(np.shape(y)) == 2:
-            y_arr = np.array(y)
-            y_data, y_data_err = y_arr[:,0], y_arr[:,1]
-            self.g.SetData(y_dataname, y_data, symerr=y_data_err)
         else:
+            # 2D
+            if x_shape[1] == 2:
+                # y, y_err
+                x_arr = np.array(x)
+                x_data, x_data_err = x_arr[:,0], x_arr[:,1]
+                self.g.SetData(x_dataname, x_data, symerr=x_data_err)
+            elif x_shape[1] == 3:
+                # y, y_err_negative, y_err_positive
+                x_arr = np.array(x)
+                x_data, x_data_negative, x_data_positive = x_arr[:,0], x_arr[:,1], x_arr[:,2]
+                self.g.SetData(x_dataname, x_data, negerr=x_data_negative, poserr=x_data_positive)
+            else:
+                raise Exception(f"Unimplemented shape of data array {x_shape}")
+
+        #if len(np.shape(x)) == 2:
+        #    x_arr = np.array(x)
+        #    x_data, x_data_err = x_arr[:,0], x_arr[:,1]
+        #    self.g.SetData(x_dataname, x_data, symerr=x_data_err)
+        #else:
+        #    x_arr = np.array(x)
+        #    x_data = x_arr
+        #    self.g.SetData(x_dataname, x_data)
+
+        # Y
+        y_shape = np.shape(y)
+        if len(y_shape) <= 1:
+            # 1D
             y_arr = np.array(y)
             y_data = y_arr
             self.g.SetData(y_dataname, y_data)
+        else:
+            # 2D
+            if y_shape[1] == 2:
+                # y, y_err
+                y_arr = np.array(y)
+                y_data, y_data_err = y_arr[:,0], y_arr[:,1]
+                self.g.SetData(y_dataname, y_data, symerr=y_data_err)
+            elif y_shape[1] == 3:
+                # y, y_err_negative, y_err_positive
+                y_arr = np.array(y)
+                y_data, y_data_negative, y_data_positive = y_arr[:,0], y_arr[:,1], y_arr[:,2]
+                self.g.SetData(y_dataname, y_data, negerr=y_data_negative, poserr=y_data_positive)
+            else:
+                raise Exception(f"Unimplemented shape of data array {y_shape}")
+
+
+        #if len(np.shape(y)) == 2:  # means y, yerr
+        #    y_arr = np.array(y)
+        #    y_data, y_data_err = y_arr[:,0], y_arr[:,1]
+        #    self.g.SetData(y_dataname, y_data, symerr=y_data_err)
+        #elif len(np.shape(y)) == 3:  # means y, y_err_negative, y_err_positive
+        #    y_arr = np.array(y)
+        #    y_data, y_data_negative, y_data_positive = y_arr[:,0], y_arr[:,1], y_arr[:,2]
+        #    self.g.SetData(y_dataname, y_data, negerr=y_data_negative, poserr=y_data_positive)
+        #else:
+        #    y_arr = np.array(y)
+        #    y_data = y_arr
+        #    self.g.SetData(y_dataname, y_data)
 
         # self.graph = self.g.Root[name + '/graph1']
         if animation:
