@@ -45,17 +45,18 @@ class VeuszEngineError(Exception):
 
 @dataclass
 class VeuszEngine(BotEngine):
-    internal_name : str    = "[VeuszEngine]"
+    internal_name : str      = "[VeuszEngine]"
     #
     g             : Embedded = None
     title         : str      = field(default="Notitle")
     pages_info    : dict     = field(default_factory=dict)
     _xy           : Any      = None # flag for animation
     #
-    showkey       : bool     = True
-    keyBorderHide : bool     = True
-    keyFontSize   : int      = 14
-    plot_line     : bool     = True
+    show_key        : bool   = True
+    key_title       : str    = ""
+    key_border_hide : bool   = True
+    key_font_size   : int    = 14
+    plot_line       : bool   = True
     #
     xname         : str      = "x"
     yname         : str      = "y"
@@ -66,7 +67,7 @@ class VeuszEngine(BotEngine):
     xmin          : str      = "Auto"
     xmax          : str      = "Auto"
     #
-    transparency   : int    = 50
+    transparency   : int     = 50
 
     def __post_init__(self):
        self.storer = Storer(exit_dump=False)
@@ -77,6 +78,8 @@ class VeuszEngine(BotEngine):
 
     def _init(self, page_name=""):
         # creating initial values for plotting per page.
+        self.storer.put(what="8",     name=page_name+"/key_font_size")
+        self.storer.put(what="",      name=page_name+"/key_title")
         self.storer.put(what="xname", name=page_name+"/xname")
         self.storer.put(what="yname", name=page_name+"/yname")
         self.storer.put(what=False,   name=page_name+"/xlog")
@@ -130,10 +133,11 @@ class VeuszEngine(BotEngine):
             # key exist
             self.key = self.g.Root[name + "/graph1/key1"]
         except:
-            if self.showkey:
+            if self.show_key:
                 self.graph.Add('key')
-                self.graph.key1.Border.hide.val = self.keyBorderHide
-                self.graph.key1.Text.size.val   = f"{str(self.keyFontSize)}pt"
+                self.graph.key1.Border.hide.val = self.key_border_hide
+                self.graph.key1.Text.size.val   = f"{str(self.key_font_size)}pt"
+                self.graph.key1.title.val       = f"{self.key_title}"
 
         return _num_lines, __num_lines
 
@@ -181,7 +185,6 @@ class VeuszEngine(BotEngine):
 
 
         # SetData(name, val, symerr=None, negerr=None, poserr=None)
-
         # X
         x_shape = np.shape(x)
         if len(x_shape) <= 1:
@@ -204,15 +207,6 @@ class VeuszEngine(BotEngine):
             else:
                 raise Exception(f"Unimplemented shape of data array {x_shape}")
 
-        #if len(np.shape(x)) == 2:
-        #    x_arr = np.array(x)
-        #    x_data, x_data_err = x_arr[:,0], x_arr[:,1]
-        #    self.g.SetData(x_dataname, x_data, symerr=x_data_err)
-        #else:
-        #    x_arr = np.array(x)
-        #    x_data = x_arr
-        #    self.g.SetData(x_dataname, x_data)
-
         # Y
         y_shape = np.shape(y)
         if len(y_shape) <= 1:
@@ -234,20 +228,6 @@ class VeuszEngine(BotEngine):
                 self.g.SetData(y_dataname, y_data, negerr=y_data_negative, poserr=y_data_positive)
             else:
                 raise Exception(f"Unimplemented shape of data array {y_shape}")
-
-
-        #if len(np.shape(y)) == 2:  # means y, yerr
-        #    y_arr = np.array(y)
-        #    y_data, y_data_err = y_arr[:,0], y_arr[:,1]
-        #    self.g.SetData(y_dataname, y_data, symerr=y_data_err)
-        #elif len(np.shape(y)) == 3:  # means y, y_err_negative, y_err_positive
-        #    y_arr = np.array(y)
-        #    y_data, y_data_negative, y_data_positive = y_arr[:,0], y_arr[:,1], y_arr[:,2]
-        #    self.g.SetData(y_dataname, y_data, negerr=y_data_negative, poserr=y_data_positive)
-        #else:
-        #    y_arr = np.array(y)
-        #    y_data = y_arr
-        #    self.g.SetData(y_dataname, y_data)
 
         # self.graph = self.g.Root[name + '/graph1']
         if animation:
@@ -287,11 +267,14 @@ class VeuszEngine(BotEngine):
 
         xy.ErrorBarLine.width.val = '1pt'
         xy.ErrorBarLine.color.val = get_line_color(color_num)
-        if self.showkey and key_name_f: xy.key.val = self.name_converter(key_name_f)
-        if self.showkey and key_name: xy.key.val = key_name
+        if self.show_key and key_name_f: xy.key.val = self.name_converter(key_name_f)
+        if self.show_key and key_name  : xy.key.val = key_name
 
         x_axis = self.graph.x
         y_axis = self.graph.y
+
+        self.graph.key1.title.val     = self.storer.get(page+"/key_title")          # key title
+        self.graph.key1.Text.size.val = str(self.storer.get(page+"/key_font_size")) # Note: key font size has to be a str
 
         x_axis.label.val = self.storer.get(page+"/xname") # self.xname
         y_axis.label.val = self.storer.get(page+"/yname") # self.yname

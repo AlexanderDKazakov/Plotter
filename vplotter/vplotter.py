@@ -38,16 +38,17 @@ if not VEUSZ and not GNUPLOT: print("No plotters available. Aborting."); sys.exi
 
 @dataclass
 class Plotter:
-    __version__    : str                               = "1.3.5"
+    __version__    : str                               = "1.4.0"
     internal_name  : str                               = "[Plotter]"
     hidden         : bool                              = False
     engine         : str                               = "veusz"
     plotter_engine : Union[VeuszEngine, GnuplotEngine] = None
 
     title         : str    = field(default="Notitle")
-    showkey       : bool   = True
-    plot_line      : bool   = True
-    keyFontSize   : int    = 14
+    show_key      : bool   = True
+    key_title     : str    = ""
+    plot_line     : bool   = True
+    key_font_size : int    = 14
     xname         : str    = "x"
     yname         : str    = "y"
     xlog          : bool   = False
@@ -59,7 +60,7 @@ class Plotter:
 
     # Veusz dependent
     pages_info    : dict   = field(default_factory=dict)
-    keyBorderHide : bool   = True
+    key_border_hide : bool   = True
     transparency  : float  = 50.0
 
     def __post_init__(self):
@@ -68,9 +69,10 @@ class Plotter:
                 hidden        = self.hidden,
                 title         = self.title,
                 pages_info    = self.pages_info,
-                showkey       = self.showkey,
-                keyFontSize   = self.keyFontSize,
-                keyBorderHide = self.keyBorderHide,
+                show_key      = self.show_key,
+                key_title     = self.key_title,
+                key_font_size   = self.key_font_size,
+                key_border_hide = self.key_border_hide,
                 plot_line     = self.plot_line,
                 xname         = self.xname,
                 yname         = self.yname,
@@ -86,7 +88,8 @@ class Plotter:
             self.plotter_engine = GnuplotEngine(
                 hidden        = self.hidden,
                 title         = self.title,
-                showkey       = self.showkey,
+                show_key      = self.show_key,
+                key_title     = self.key_title,
                 plot_line     = self.plot_line,
                 xname         = self.xname,
                 yname         = self.yname,
